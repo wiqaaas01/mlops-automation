@@ -4,7 +4,7 @@ name: Retrain Model
 # Schedule the workflow to run every Monday at 2 AM UTC
 on:
   schedule:
-    - cron: '*/1 * * * 1'  # every 5 minutes 
+    - cron: '*/1 * * * *'  # every 5 minutes 
 
 jobs:
   retrain:
