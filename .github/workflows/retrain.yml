@@ -1,0 +1,39 @@
+# .github/workflows/retrain.yml
+name: Retrain Model
+
+# Schedule the workflow to run every Monday at 2 AM UTC
+on:
+  schedule:
+    - cron: '*/1 * * * 1'  # every 5 minutes 
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the latest code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Python environment
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Retrain the model
+      - name: Retrain the model
+        run: python train.py
+
+      # Save the retrained model as an artifact
+      - name: Upload retrained model
+        uses: actions/upload-artifact@v3
+        with:
+          name: retrained-model
+          path: models/model.pkl
